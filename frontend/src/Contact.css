@@ -1,0 +1,194 @@
+@import url("https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.6.0/css/fontawesome.min.css");
+.containerr {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80vh;
+}
+
+.containerr .h1 {
+    text-align: center;
+    color: black;
+    font-size: 1.9rem;
+}
+
+.sub-title {
+    color: black;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+
+#contact-container {
+    width: 1300px;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    padding: 10px;
+    background: #c0b9b9;
+    border: 1px solid #449cd2;
+    height: 800px;
+}
+
+.contact-info {
+    background-color: #3f605c;
+    border-radius: 15px;
+    flex: 0 1 40%;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-info .p {
+    font-size: 0.9rem;
+    color: white;
+    font-weight: 300;
+    margin-bottom: 2rem;
+}
+
+.contact-info .h4 {
+    font-size: 1.7rem;
+    font-weight: 500;
+    /* margin-bottom: 10rem; */
+    padding-bottom: 5px;
+    margin: 0;
+}
+
+.icon-text {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: #05f7ff;
+}
+
+.icon-text .span {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-left: 0.5rem;
+}
+
+.social-media {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    padding-top: 95px;
+}
+
+.social-media .icon-circle {
+    flex: 0 1 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 25px;
+    height: 40px;
+    transition: 0.3s all ease-in-out;
+    &:hover {
+        background: #05f7ff;
+    }
+}
+
+.form {
+    padding: 40px;
+    width: 100%;
+}
+
+.form .col {
+    display: flex;
+    width: 105%;
+    flex: 0 0 100%;
+}
+
+.form .form-group {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    flex: 0 1 100%;
+    padding-right: 40px;
+}
+
+.form .form-group .label {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 0.2rem;
+}
+
+.FIcon {
+    color: black;
+    margin-right: 4px;
+}
+
+.form .form-group .input[type="text"],
+input[type="tel"],
+input[type="email"],
+.textarea {
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    border-radius: 4px;
+    color: black;
+    margin-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    &:focus {
+        outline: none;
+        border: none;
+        border-bottom: 2px solid #05f7ff;
+    }
+}
+
+.radio-button input[type="radio"]:checked+label {
+    color: black;
+    font-weight: 500;
+}
+
+#radio-buttons {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.label-what {
+    margin-top: 0.9 rem;
+    margin-bottom: 0.2rem;
+    color: white;
+}
+
+.label-message {
+    margin-bottom: 0.6rem;
+    color: white;
+}
+
+.form .radio-button {
+    margin-right: 20px;
+    margin-bottom: 1rem;
+}
+
+.form-group .button-send {
+    width: 200px;
+    height: 45px;
+    cursor: pointer;
+    background: #5ff075;
+    position: fixed;
+    right: 115px;
+    border: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border-radius: 7px;
+    font-weight: 500;
+    &:hover {
+        background: #11b52a;
+    }
+}
+
+.textarea {
+    height: 90px;
+    bottom: 10px;
+    margin-bottom: 21px;
+    border-radius: 7px;
+}

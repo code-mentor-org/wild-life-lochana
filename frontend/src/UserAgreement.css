@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Bruno+Ace&family=Inter:wght@100..900&display=swap");
+.flex-align-justify {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-align {
+    display: flex;
+    align-items: center;
+}
+
+.wrapper {
+    min-height: 100vh;
+    padding: 0 20px;
+}
+
+.terms_conditions {
+    width: 500px;
+    max-width: 100%;
+    height: 600px;
+    background: #bfc4cf;
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+}
+
+.terms_conditions .tc_item {
+    padding: 20px 40px;
+}
+
+.terms_conditions .tc_head {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+    height: 90px;
+}
+
+.terms_conditions .tc_head .icon {
+    width: 50px;
+    height: 50px;
+    background: #eb7676;
+    margin-right: 20px;
+    border-radius: 50%;
+    font-size: 18px;
+    color: var(--white);
+}
+
+.terms_conditions .tc_body {
+    height: calc(100% - 170px);
+    overflow-y: auto;
+    padding-right: 20px;
+    background: #e7e9ef;
+}
+
+.terms_conditions .tc_body ul li {
+    margin-bottom: 15px;
+}
+
+.terms_conditions .tc_body ul li h5 {
+    margin-bottom: 5px;
+    text-indent: -24px;
+    padding-left: 10px;
+    line-height: 1.1rem;
+}
+
+.FIcon {
+    margin-right: 4px;
+}
+
+.terms_conditions .tc_foot {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.15);
+    justify-content: space-between;
+    height: 80px;
+}
+
+.terms_conditions .tc_foot button {
+    width: 100%;
+    border: 1px solid var(--bg-clr);
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.terms_conditions .tc_foot button.tc_decline_btn {
+    margin-right: 20px;
+    background: #e5d4d4;
+    border-radius: 4px;
+    font-weight: 400;
+}
+
+.terms_conditions .tc_foot button.tc_accept_btn {
+    background: #55e88f;
+    border-radius: 4px;
+    font-weight: 400;
+}
+
+.terms_conditions .tc_foot button.tc_decline_btn:hover {
+    background: #f00707;
+}
+
+.terms_conditions .tc_foot button.tc_accept_btn:hover {
+    background: #24a77e;
+}
