@@ -41,3 +41,13 @@ export const getResidency = asyncHandler(async (req, res) => {
   if (!residency) return res.status(404).json({ message: "Not found" });
   res.send(residency);
 });
+
+export const deleteResidency = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const residency = await Residency.findById(id);
+  if (!residency) return res.status(404).json({ message: "Not found" });
+  await residency.deleteOne();
+  res.send({ message: "Residency deleted successfully" });
+});
+
+

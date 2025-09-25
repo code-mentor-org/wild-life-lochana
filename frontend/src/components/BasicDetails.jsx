@@ -25,7 +25,7 @@ const BasicDetails = ({
 		validate: {
 			title: (value) => validateString(value),
 			description: (value) => validateString(value),
-			price: (value) => (value < 15 ? "Must be minimum 15 minutes" : null),
+			price: (value) => (value < 1 ? "Must be minimum 1 minutes" : null),
 		},
 	});
 
