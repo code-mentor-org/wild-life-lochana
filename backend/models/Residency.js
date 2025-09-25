@@ -12,13 +12,12 @@ const residencySchema = new mongoose.Schema({
   userEmail: { type: String, required: true, ref: "User" },
   expiresAt: {
         type: Date,
-        index: { expireAfterSeconds: 0 } // TTL index with 0 seconds means it uses the date value directly
+        index: { expireAfterSeconds: 0 }
     }
 }, { timestamps: true });
 
 residencySchema.pre('save', function(next) {
     if (this.price && this.isNew) {
-        // Calculate expiration date: current time + time in minutes
         this.expiresAt = new Date(Date.now() + (this.price * 60 * 1000));
     }
     next();
