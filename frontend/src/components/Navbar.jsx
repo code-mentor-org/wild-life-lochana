@@ -11,6 +11,7 @@ import AddPropertyModal from "./AddPropertyModal";
 import useAuthCheck from "../hooks/useAuthCheck";
 import ProtectedNavLink from "../utils/ProtectedNavLink";
 import ContactModal from "./ContactModal";
+import axios from "axios";
 
 const Navbar = ({ containerStyles }) => {
 	const [modalOpened, setModalOpened] = useState(false);
@@ -28,6 +29,17 @@ const Navbar = ({ containerStyles }) => {
 			setOpened(true);
 		}
 	};
+
+	
+  const handleSaveProperty = async (propertyDetails) => {
+    try {
+      const res = await axios.post("http://localhost:8000/api/residency/create", propertyDetails);
+      console.log("Property saved:", res.data);
+      setOpened(false); // close modal after success
+    } catch (err) {
+      console.error("Error saving property:", err);
+    }
+  };
 
 	return (
 		<nav className={`${containerStyles}`}>
@@ -68,7 +80,7 @@ const Navbar = ({ containerStyles }) => {
 				<MdAddHome />
 				<div> Add property </div>{" "}
 			</div>{" "}
-			<AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />{" "}
+			<AddPropertyModal opened={modalOpened} setOpened={setModalOpened} onComplete={handleSaveProperty} />{" "}
 			<ProtectedNavLink
 				to={"/information"}
 				className={({ isActive }) =>

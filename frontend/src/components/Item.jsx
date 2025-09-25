@@ -13,7 +13,7 @@ const Item = ({ property }) => {
 	const navigate = useNavigate();
 	return (
 		<div
-			onClick={() => navigate(`../collection/${property.id}`)}
+			onClick={() => navigate(`../collection/${property._id}`)}
 			className="rounded-2xl p-5 bg-white"
 		>
 			<div className="pb-2 relative">

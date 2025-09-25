@@ -6,7 +6,7 @@ import UploadImage from "./UploadImage";
 import Facilities from "./Facilities";
 import BasicDetails from "./BasicDetails";
 
-const AddPropertyModal = ({ opened, setOpened }) => {
+const AddPropertyModal = ({ opened, setOpened, onComplete }) => {
 	const [active, setActive] = useState(0);
 	const { user } = useAuth0();
 	const [propertyDetails, setPropertyDetails] = useState({
@@ -77,7 +77,12 @@ const AddPropertyModal = ({ opened, setOpened }) => {
 								setPropertyDetails={setPropertyDetails}
 								setOpened={setOpened}
 								setActiveStep={setActive}
+								onComplete={() => {
+									console.log("Collected property details:", propertyDetails);
+									if (onComplete) onComplete(propertyDetails);  // ✅ call parent
+								}}
 							/>
+
 						</Stepper.Step>
 						<Stepper.Completed>
 							Completed, click back button to get to previous step

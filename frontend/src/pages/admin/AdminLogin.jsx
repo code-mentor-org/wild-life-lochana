@@ -1,8 +1,12 @@
 import React,{useState} from "react";
 import adminImg from "../../assets/wild-admin.webp";
 
+
 const AdminLogin = () => {
-  const [formData, setFormData] = useState([{ username: "admin@gmail.com", password: "123456" }]);
+  const [formData, setFormData] = useState([{ 
+    username: import.meta.env.VITE_ADMIN_EMAIL, 
+    password: import.meta.env.VITE_ADMIN_PASSWORD
+  }]);
   const handleOnSubmit = (e) => {
     e.preventDefault();
     const username = e.target[0].value;
@@ -16,16 +20,16 @@ const AdminLogin = () => {
   };
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-[70%] h-[400px] rounded-lg bg-[#ececec] flex">
+      <div className="w-[70%] h-[400px] rounded-xl bg-[#ececec] flex">
         <div className="w-[50%] h-full">
           <img
             src={adminImg}
             alt="Admin Side Logo"
-            className="w-full h-full object-cover rounded-l-lg"
+            className="w-full h-full object-cover rounded-l-xl"
           />
         </div>
         <div className="w-[50%] h-full flex flex-col justify-center items-center">
-          <h2 className="text-[20px] font-bold">Admin Login</h2>
+          <h2 className="text-[30px] font-bold">Admin Login</h2>
           <form
             onSubmit={handleOnSubmit}
             className="flex flex-col gap-4 mt-6 w-[80%]"
