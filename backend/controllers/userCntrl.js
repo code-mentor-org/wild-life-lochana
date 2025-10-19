@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import Residency from "../models/Residency.js";
+import { json } from "express";
 
 export const createUser = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -77,3 +78,8 @@ export const getAllFav = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email }).populate("favResidenciesID");
   res.send(user.favResidenciesID);
 });
+
+export const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find();
+  res.send(users);
+})

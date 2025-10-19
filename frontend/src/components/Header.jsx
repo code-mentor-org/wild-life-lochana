@@ -5,11 +5,26 @@ import { MdClose, MdMenu } from "react-icons/md";
 import userIcon from "../assets/user.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileMenu from "./ProfileMenu";
+import axios from "axios";
 const Header = () => {
 	const [active, setActive] = useState(false);
 	const [menuOpened, setMenuOpened] = useState(false);
 	const toggleMenu = () => setMenuOpened(!menuOpened);
 	const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
+
+	const handleSaveUser = async()=>{
+		try{
+			const response = await axios.post(`http://localhost:8000/api/user/register`,{email:user.email})
+			console.log(response);
+		}catch(error){
+			console.log(error);
+			
+		}
+	}
+
+	useEffect(()=>{
+		handleSaveUser()
+	},[isAuthenticated])
 
 	useEffect(() => {
 		const handleScroll = () => {

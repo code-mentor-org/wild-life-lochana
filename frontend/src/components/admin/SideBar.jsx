@@ -17,9 +17,9 @@ const SideBar = ({ setSection }) => {
                 <div onClick={() => handleChangeType("P")} style={{ backgroundColor: actuve === "P" ? "#4f860c" : "" }}
                     className="w-full h-[40px] bg-[#8AC343] flex justify-start text-white font-medium
             items-center rounded-r-2xl cursor-pointer ps-2">All Properties</div>
-                {/* <div onClick={() => handleChangeType("U")} style={{ backgroundColor: actuve === "U" ? "#4f860c" : "" }}
+                <div onClick={() => handleChangeType("U")} style={{ backgroundColor: actuve === "U" ? "#4f860c" : "" }}
                     className="w-full h-[40px] bg-[#8AC343] flex justify-start text-white font-medium
-            items-center rounded-r-2xl cursor-pointer ps-2 mt-3">All Users</div> */}
+            items-center rounded-r-2xl cursor-pointer ps-2 mt-3">All Users</div>
             </div>
             <div
             onClick={() => navigate("/admin")}
