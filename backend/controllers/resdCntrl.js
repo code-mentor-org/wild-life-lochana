@@ -50,4 +50,17 @@ export const deleteResidency = asyncHandler(async (req, res) => {
   res.send({ message: "Residency deleted successfully" });
 });
 
+export const updateResidency = asyncHandler(async (req, res) => {
+  const {id} = req.params;
+  const { title, description, delete_time, country, city } = req.body;
+  const residency = await Residency.findById(id);
+  residency.title = title;
+  residency.description = description;
+  residency.price = delete_time;
+  residency.country = country;
+  residency.city = city;
+  await residency.save();
+  res.send({ message: "Residency updated successfully" });
+})
+
 
