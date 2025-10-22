@@ -11,14 +11,12 @@
 }
 
 .wrapper {
-    min-height: 100vh;
+    width: 100%;
     padding: 0 20px;
 }
 
 .terms_conditions {
-    width: 500px;
-    max-width: 100%;
-    height: 600px;
+    width: 100%;
     background: #bfc4cf;
     border-radius: 4px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);

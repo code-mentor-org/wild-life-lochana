@@ -6,19 +6,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "../UserAgreement.css";
 
-const UserAgreement = () => {
+
+
+const UserAgreement = ({handleAccept, handleClose}) => {
 	return (
 		<div className="wrapper flex-align-justify">
 			<div className="terms_conditions">
 				<div className="tc_item tc_head flex-align-justify">
-					<div className="icon flex-align-justify">
-						<FontAwesomeIcon icon={faFileContract} />
-					</div>
 					<div className="text">
 						<h2 className="tc_title font-medium font-sans-serif">
 							TERMS & CONDITIONS (USER AGREEMENT)
 						</h2>
-						<p>Last updated on September 30, 2025</p>
 					</div>
 				</div>
 				<div className="tc_item tc_body">
@@ -136,8 +134,8 @@ const UserAgreement = () => {
 					</ul>
 				</div>
 				<div className="tc_item tc_foot flex-align">
-					<button className="tc_decline_btn">Decline</button>
-					<button className="tc_accept_btn">Accept</button>
+					<button className="tc_decline_btn" onClick={handleClose}>Decline</button>
+					<button className="tc_accept_btn" onClick={handleAccept}>Accept</button>
 				</div>
 			</div>
 		</div>
