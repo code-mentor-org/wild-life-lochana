@@ -37,7 +37,7 @@ const Collection = () => {
 				<div>
 					<Searchbar filter={filter} setFilter={setfilter} />
 					{/* {container} */}
-					<div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-10">
+					<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-10">
 						{data
 							.filter(
 								(property) =>
