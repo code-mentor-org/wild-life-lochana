@@ -17,7 +17,7 @@ const Item = ({ property }) => {
 			className="rounded-2xl p-5 bg-white"
 		>
 			<div className="pb-2 relative">
-				<img src={property.image} alt={property.title} className="rounded-xl" />
+				<img src={property.image} alt={property.title} className="rounded-xl h-[200px] !object-cover w-full" />
 				{/* {Like btn} */}
 				<div className="absolute top-4 right-6">
 					<HeartBtn id={property?.id} />
