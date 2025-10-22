@@ -20,7 +20,7 @@ const Item = ({ property }) => {
 				<img src={property.image} alt={property.title} className="rounded-xl h-[200px] !object-cover w-full" />
 				{/* {Like btn} */}
 				<div className="absolute top-4 right-6">
-					<HeartBtn id={property?.id} />
+					<HeartBtn id={property?._id} />
 				</div>
 			</div>
 			<h5 className="bold-16 my-1 text-secondary">{property.city}</h5>
