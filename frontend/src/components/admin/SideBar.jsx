@@ -20,6 +20,9 @@ const SideBar = ({ setSection }) => {
                 <div onClick={() => handleChangeType("U")} style={{ backgroundColor: actuve === "U" ? "#4f860c" : "" }}
                     className="w-full h-[40px] bg-[#8AC343] flex justify-start text-white font-medium
             items-center rounded-r-2xl cursor-pointer ps-2 mt-3">All Users</div>
+            <div onClick={() => handleChangeType("B")} style={{ backgroundColor: actuve === "U" ? "#4f860c" : "" }}
+                    className="w-full h-[40px] bg-[#8AC343] flex justify-start text-white font-medium
+            items-center rounded-r-2xl cursor-pointer ps-2 mt-3">All Bookings</div>
             </div>
             <div
             onClick={() => navigate("/admin")}

@@ -3,6 +3,7 @@ import SideBar from "../../components/admin/SideBar";
 import TopBar from "../../components/admin/TopBar";
 import AllPropperties from "../../components/admin/AllProperties";
 import AllUsers from "../../components/admin/AllUsers";
+import AllBookings from "../../components/admin/AllBookings";
 
 const Dashboard = () => {
   const [section, setsSction] = useState("P");
@@ -27,6 +28,8 @@ const Dashboard = () => {
                   return <AllPropperties />;
                 case "U":
                   return <AllUsers/>;
+                case "B":
+                  return <AllBookings/>;
                 default:
                   return <AllPropperties />;
               }
