@@ -12,8 +12,6 @@ const Favourites = () => {
 		userDetails: { favourites },
 	} = useContext(UserDetailContext);
 
-	// console.log(data)
-
 	if (isError) {
 		return (
 			<div>
@@ -21,6 +19,7 @@ const Favourites = () => {
 			</div>
 		);
 	}
+	
 	if (isLoading) {
 		return (
 			<div className="h-64 flexCenter">
@@ -32,6 +31,24 @@ const Favourites = () => {
 					aria-label="puff-loading"
 				/>
 			</div>
+		);
+	}
+
+	// Handle case when favourites is undefined or not yet loaded
+	if (!favourites || !Array.isArray(favourites)) {
+		return (
+			<main className="max-padd-container my-[99px]">
+				<div className="max-padd-container py-10 xl:py-22 bg-primary rounded-3xl">
+					<div>
+						<Searchbar filter={filter} setFilter={setfilter} />
+						<div className="grid gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 mt-10">
+							<div className="col-span-full text-center py-10">
+								<p className="text-lg">No favourites yet. Start adding properties to your favourites!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
 		);
 	}
 
@@ -51,9 +68,7 @@ const Favourites = () => {
 									property.country.toLowerCase().includes(filter.toLowerCase())
 							)
 							.map((property) => (
-								<Item key={property.title} property={property} />
-								// data.map((property) => (
-								// <Item key={property.title} property={property} />
+								<Item key={property.id} property={property} />
 							))}
 					</div>
 				</div>

@@ -18,7 +18,7 @@ const Layout = () => {
 	useFavourites();
 	useBookings();
 
-	const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
+	const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
 	const { setUserDetails } = useContext(UserDetailContext);
 	const { mutate } = useMutation({
 		mutationKey: [user?.email],
@@ -27,18 +27,27 @@ const Layout = () => {
 
 	useEffect(() => {
 		const getTokenAndRegister = async () => {
-			const res = await getAccessTokenWithPopup({
-				authorizationParams: {
-					audience: "http://localhost:8000",
-					scope: "openid profile email",
-				},
-			});
-			localStorage.setItem("access_token", res);
-			setUserDetails((prev) => ({ ...prev, token: res }));
-			// console.log(res)
-			mutate(res);
+			try {
+				// Use getAccessTokenSilently instead of getAccessTokenWithPopup
+				const res = await getAccessTokenSilently({
+					authorizationParams: {
+						audience: "http://localhost:8000",
+						scope: "openid profile email",
+					},
+				});
+				localStorage.setItem("access_token", res);
+				setUserDetails((prev) => ({ ...prev, token: res }));
+				mutate(res);
+			} catch (error) {
+				console.error("Error getting access token:", error);
+				// Only use popup as fallback if silent auth fails
+				// Don't automatically trigger popup - let user trigger it manually if needed
+			}
 		};
-		isAuthenticated && getTokenAndRegister();
+		
+		if (isAuthenticated) {
+			getTokenAndRegister();
+		}
 	}, [isAuthenticated]);
 
 	const [chatHistory, setChatHistory] = useState([
@@ -92,10 +101,12 @@ const Layout = () => {
 
 	useEffect(() => {
 		// Auto-scroll whenever chat history updates
-		chatBodyRef.current.scrollTo({
-			top: chatBodyRef.current.scrollHeight,
-			behavior: "smooth",
-		});
+		if (chatBodyRef.current) {
+			chatBodyRef.current.scrollTo({
+				top: chatBodyRef.current.scrollHeight,
+				behavior: "smooth",
+			});
+		}
 	}, [chatHistory]);
 
 	return (
