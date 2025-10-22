@@ -6,25 +6,70 @@ import userIcon from "../assets/user.svg";
 import { useAuth0 } from "@auth0/auth0-react";
 import ProfileMenu from "./ProfileMenu";
 import axios from "axios";
+import { Modal } from '@mantine/core';
+import UserAgreement from "../components/UserAgreement";
+
+const getCookie = (name) => {
+	const value = `; ${document.cookie}`;
+	const parts = value.split(`; ${name}=`);
+	if (parts.length === 2) return parts.pop().split(';').shift();
+	return null;
+};
+
+const setCookie = (name, value, days = 365) => {
+	const expires = new Date();
+	expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+	document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+};
+
 const Header = () => {
 	const [active, setActive] = useState(false);
 	const [menuOpened, setMenuOpened] = useState(false);
+	const [isModal, setIsModal] = useState(false);
 	const toggleMenu = () => setMenuOpened(!menuOpened);
 	const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
 
-	const handleSaveUser = async()=>{
-		try{
-			const response = await axios.post(`http://localhost:8000/api/user/register`,{email:user.email})
+	const handleSaveUser = async () => {
+		try {
+			const response = await axios.post(`http://localhost:8000/api/user/register`, { email: user.email });
 			console.log(response);
-		}catch(error){
+		} catch (error) {
 			console.log(error);
-			
 		}
-	}
+	};
 
-	useEffect(()=>{
-		handleSaveUser()
-	},[isAuthenticated])
+	const handleLogin = () => {
+		const hasAccepted = getCookie('termsAccepted');
+		
+		// If user hasn't accepted terms, show modal first
+		if (!hasAccepted) {
+			setIsModal(true);
+		} else {
+			// If already accepted, proceed with login
+			loginWithRedirect();
+		}
+	};
+
+	const closeModel = () => {
+		// User declined - close modal and don't allow login
+		setIsModal(false);
+		// Optionally show a message
+		alert("You must accept the Terms & Conditions to login.");
+	};
+
+	const acceptHandle = () => {
+		// User accepted - save cookie and proceed with login
+		setCookie('termsAccepted', 'true');
+		setIsModal(false);
+		// Now proceed with login after acceptance
+		loginWithRedirect();
+	};
+
+	useEffect(() => {
+		if (isAuthenticated && user) {
+			handleSaveUser();
+		}
+	}, [isAuthenticated, user]);
 
 	useEffect(() => {
 		const handleScroll = () => {
@@ -42,7 +87,7 @@ const Header = () => {
 		return () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
-	}, [menuOpened]); // Dependency array ensures that the effect runs when menuOpened changes
+	}, [menuOpened]);
 
 	return (
 		<header className="max-padd-container fixed top-1 w-full left-0 right-0 z-50">
@@ -91,7 +136,7 @@ const Header = () => {
 						)}
 						{!isAuthenticated ? (
 							<button
-								onClick={loginWithRedirect}
+								onClick={handleLogin}
 								className="btn-secondary flexCenter gap-x-2 medium-16 rounded-full"
 							>
 								<img src={userIcon} alt="" height={22} width={22} />
@@ -103,6 +148,22 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
+			<Modal
+				opened={isModal}
+				withCloseButton={false}
+				centered
+				onClose={closeModel}
+				title={
+					<div className="flex w-full items-center">
+						<h2 className="text-md font-medium">Terms & Conditions</h2>
+					</div>
+				}
+			>
+				<UserAgreement
+					handleClose={closeModel}
+					handleAccept={acceptHandle}
+				/>
+			</Modal>
 		</header>
 	);
 };
