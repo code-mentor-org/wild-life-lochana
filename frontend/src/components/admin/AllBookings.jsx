@@ -96,7 +96,7 @@ const AllBookings = () => {
                     </thead>
                     <tbody>
                         {bookingsData?.map((user) => (
-                            <tr key={user?.userId} className="hover:bg-gray-50">
+                            <tr key={user?.userId} className="hover:bg-[#e2e2e2]">
                                 <td className="border border-gray-300 px-4 py-2 font-medium">
                                     {user?.userEmail}
                                 </td>
