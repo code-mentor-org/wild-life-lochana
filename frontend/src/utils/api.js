@@ -2,7 +2,7 @@ import axios from "axios";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 
-const BASE_URL = "http://localhost:8000/api"; // Add this constant
+const BASE_URL = "http://localhost:8000/api";
 
 export const api = axios.create({
     baseURL: BASE_URL,
@@ -40,10 +40,7 @@ export const getProperty = async (id) => {
 
 export const createUser = async (email) => {
     try {
-        await api.post(
-            `/user/register`,
-            { email }
-        );
+        await api.post(`/user/register`, { email });
     } catch (error) {
         toast.error("Something went wrong, Please try again");
         throw error;
@@ -90,7 +87,6 @@ export const removeBooking = async (id, email, token) => {
 
 export const toFav = async (id, email, token) => {
     try {
-        console.log(id);
         await api.post(
             `/user/toFav/${id}`,
             { email },
@@ -101,50 +97,60 @@ export const toFav = async (id, email, token) => {
             }
         );
     } catch (error) {
-        toast.error();
+        toast.error("Something went wrong");
         throw error;
     }
 };
 
-// Use axios instead of fetch for consistency
+// Get all favorites
 export const getAllFav = async (email, token) => {
-	console.log(email);
-	
-    try {
-        const response = await api.post(`/user/allFav`,{ email });
-        return response.data;
-    } catch (error) {
-        toast.error("Failed to fetch favorites",{position:"bottom-right"});
-        throw error;
-    }
-};
-
-export const getUserWithFavorites = async (email, token) => {
-    console.log("API: Getting favorites for email:", email); // Debug log
-    
     try {
         const response = await api.post(
             `/user/allFav`,
-            { email }, // This should be { email: "user@example.com" }
+            { email },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             }
         );
-        console.log("API: Favorites response:", response.data); // Debug log
         return response.data;
     } catch (error) {
-        console.error("API: Error fetching user favorites:", error);
-        toast.error("Failed to fetch user favorites",{position:"bottom-right"});
+        toast.error("Failed to fetch favorites", { position: "bottom-right" });
         throw error;
     }
 };
 
-export const getAllBookings = async (email, token) => {
-    if (!token) return;
+export const getUserWithFavorites = async (email, token) => {
     try {
-        const res = await api.post(
+        const response = await api.post(
+            `/user/allFav`,
+            { email },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        toast.error("Failed to fetch user favorites", { position: "bottom-right" });
+        throw error;
+    }
+};
+
+// FIXED: getAllBookings function
+// In utils/api.js - FIXED version
+export const getAllBookings = async (email, token) => {
+    console.log("API: Getting bookings for email:", email);
+    
+    if (!email || !token) {
+        console.log("API: Skipping bookings fetch - no email or token");
+        return [];
+    }
+    
+    try {
+        const response = await api.post(
             `/user/allBookings`,
             { email },
             {
@@ -153,16 +159,32 @@ export const getAllBookings = async (email, token) => {
                 },
             }
         );
-        return res.data["bookedVisits"];
-    } catch (e) {
-        toast.error("Something went wrong while fetching bookings");
-        throw e;
+        console.log("API: Bookings response:", response.data);
+        
+        // Handle different response formats
+        if (Array.isArray(response.data)) {
+            return response.data;
+        } else if (response.data && Array.isArray(response.data.bookedVisits)) {
+            return response.data.bookedVisits;
+        } else {
+            return [];
+        }
+    } catch (error) {
+        console.error("API: Error fetching bookings:", error);
+        
+        // Don't show toast for unauthorized/not authenticated
+        if (error.response?.status === 401 || error.response?.status === 404) {
+            console.log("User not authenticated or not found");
+            return [];
+        }
+        
+        toast.error("Failed to fetch bookings", { position: "bottom-right" });
+        throw error;
     }
 };
 
 export const createResidency = async (data, token, userEmail) => {
     const requestData = { ...data, userEmail };
-    console.log(requestData);
     try {
         const res = await api.post(
             `/residency/create`,
@@ -173,8 +195,28 @@ export const createResidency = async (data, token, userEmail) => {
                 },
             }
         );
+        return res.data;
     } catch (error) {
-        toast.error();
+        toast.error("Failed to create residency");
         throw error;
+    }
+};
+
+// In your context or wherever you set user details
+// When fetching user data, make sure to include bookings:
+
+const fetchUserDetails = async (email, token) => {
+    try {
+        const bookings = await getAllBookings(email, token);
+        const favorites = await getAllFav(email, token);
+        
+        setUserDetails(prev => ({
+            ...prev,
+            bookings: bookings || [],
+            favourites: favorites || [],
+            token: token
+        }));
+    } catch (error) {
+        console.error("Error fetching user details:", error);
     }
 };

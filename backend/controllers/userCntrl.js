@@ -1,7 +1,6 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import Residency from "../models/Residency.js";
-import { json } from "express";
 
 export const createUser = asyncHandler(async (req, res) => {
   const { email } = req.body;
@@ -32,11 +31,20 @@ export const bookVisit = asyncHandler(async (req, res) => {
   res.send("Your visit is booked successfully");
 });
 
-// All bookings
+// All bookings - FIXED: Handle user not found
 export const allBookings = asyncHandler(async (req, res) => {
   const { email } = req.body;
+  
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
   const user = await User.findOne({ email }).select("bookedVisits");
-  res.send(user);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  
+  res.send(user.bookedVisits || []);
 });
 
 // Cancel booking
@@ -72,14 +80,23 @@ export const toFav = asyncHandler(async (req, res) => {
   res.send({ message: "Added to favorites", user });
 });
 
-// Get all favorites
+// Get all favorites - FIXED: Handle user not found and empty favorites
 export const getAllFav = asyncHandler(async (req, res) => {
   const { email } = req.body;
+  
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
   const user = await User.findOne({ email }).populate("favResidenciesID");
-  res.send(user.favResidenciesID);
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  res.send(user.favResidenciesID || []);
 });
 
 export const getAllUsers = asyncHandler(async (req, res) => {
   const users = await User.find();
   res.send(users);
-})
+});
